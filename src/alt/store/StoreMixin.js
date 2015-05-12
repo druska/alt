@@ -41,6 +41,7 @@ const StoreMixin = {
         // if we don't have it in cache then fetch it
         if (!value) {
           isLoading = true
+          /* istanbul ignore else */
           if (asyncSpec.loading) asyncSpec.loading()
           asyncSpec.remote(state, ...args)
             .then((v) => {
