@@ -61,6 +61,12 @@ const StoreMixin = {
 
     // You can pass in the constant or the function itself
     const key = symbol[Sym.ACTION_KEY] ? symbol[Sym.ACTION_KEY] : symbol
+    if (this[Sym.LISTENERS].hasOwnProperty(key)) {
+      throw new ReferenceError(
+        `The action ${key.toString()} has already been bound to store` +
+        `${this._storeName}`
+      )
+    }
     this[Sym.LISTENERS][key] = handler.bind(this)
     this[Sym.ALL_LISTENERS].push(Symbol.keyFor(key))
   },
