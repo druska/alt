@@ -42,6 +42,18 @@ class BindActions {
   two() { }
 }
 
+class SameActionMultipleTimes {
+  constructor() {
+    this.bindListeners({
+      oneFirst: Actions.ONE,
+      oneSecond: Actions.ONE
+    })
+  }
+
+  oneFirst() { }
+  oneSecond() { }
+}
+
 
 export default {
   'Exporting listener names': {
@@ -69,6 +81,12 @@ export default {
         myStore.boundListeners.indexOf(Symbol.keyFor(Actions.ONE)) > -1 &&
         myStore.boundListeners.indexOf(Symbol.keyFor(Actions.TWO)) > -1
       )
+    },
+
+    'when binding the same action to multiple listeners'() {
+      assert.throws(() => {
+        alt.createStore(SameActionMultipleTimes)
+      })
     },
   }
 }
